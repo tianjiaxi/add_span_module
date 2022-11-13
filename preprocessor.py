@@ -652,6 +652,7 @@ class Corpus(object):
         )  # for batch sampling in training
 
     def get_batch_meta(self, batch_size, device="cuda", shuffle=True):
+        # when train, if exceeds, we should shuffle
         if self.batch_start_idx + batch_size > self.n_total:
             self.reset_batch_info(shuffle=shuffle)
 

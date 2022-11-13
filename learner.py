@@ -73,13 +73,29 @@ class Learner(nn.Module):
         else:
             logger.info("********** Loading pre-trained model **********")
             cache_dir = cache_dir if cache_dir else str(PYTORCH_PRETRAINED_BERT_CACHE)
-            self.model = BertForTokenClassification_.from_pretrained(
-                bert_model,
-                cache_dir=cache_dir,
-                num_labels=num_labels,
-                output_hidden_states=True,
-            ).to(args.device)
+            # train_data_path = './extra_data/a_new_r_o.jsonl'
+            if args.add_trained_span:
+                add_trained_span_path = './trained_span/en_span_pytorch_model.bin'
+                self.model = BertForTokenClassification_.from_pretrained(
+                    bert_model, num_labels=num_labels, output_hidden_states=True
+                ).to(args.device)
+                self.model.load_state_dict(torch.load(add_trained_span_path, map_location="cuda"))
 
+            else:
+                # here, the model not only means bert, it also means the core learner module--BertForTokenClassification_
+                self.model = BertForTokenClassification_.from_pretrained(
+                    bert_model,
+                    cache_dir=cache_dir,
+                    num_labels=num_labels,
+                    output_hidden_states=True,
+                ).to(args.device)
+            # # here, the model not only means bert, it also means the core learner module--BertForTokenClassification_
+            # self.model = BertForTokenClassification_.from_pretrained(
+            #     bert_model,
+            #     cache_dir=cache_dir,
+            #     num_labels=num_labels,
+            #     output_hidden_states=True,
+            # ).to(args.device)
         if self.eval_mode != "two-stage":
             self.model.set_config(
                 args.use_classify,

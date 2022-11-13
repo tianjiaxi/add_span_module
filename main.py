@@ -555,7 +555,11 @@ if __name__ == "__main__":
         action="store_true",
         help="if true, will convert the bpe encode result to word level.",
     )
-
+    parser.add_argument(
+        "--add_trained_span",
+        action="store_true",
+        help="if true, will import trained span module.",
+    )
     args = parser.parse_args()
     args.negative_types_number = args.N - 1
     if "Domain" in args.dataset:
@@ -566,7 +570,7 @@ if __name__ == "__main__":
 
     # set up GPU device
     device = torch.device("cuda")
-    torch.cuda.set_device(args.gpu_device)
+    # torch.cuda.set_device(args.gpu_device)
 
     # setup logger settings
     if args.test_only:
