@@ -109,7 +109,7 @@ class Learner(nn.Module):
 
     def layer_set(self):
         # layer freezing
-        no_grad_param_names = ["embeddings", "pooler"] + [
+        no_grad_param_names = ["pooler"] + [
             "layer.{}.".format(i) for i in range(self.freeze_layer)
         ]
         logger.info("The frozen parameters are:")
