@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT license.
 
-SEEDS=(171 354 550)
+SEEDS=(550 175)
 N=5
 K=1
 mode=inter
@@ -14,7 +14,7 @@ for seed in ${SEEDS[@]}; do
         --N=${N} \
         --K=${K} \
         --similar_k=10 \
-        --eval_every_meta_steps=100 \
+        --eval_every_meta_steps=25 \
         --name=10-k_100_2_16_3_max_loss_2_5_BIOES \
         --train_mode=span \
         --inner_steps=2 \
@@ -22,7 +22,7 @@ for seed in ${SEEDS[@]}; do
         --max_ft_steps=3 \
         --lambda_max_loss=2 \
         --inner_lambda_max_loss=5 \
-        --tagging_scheme=BIOES \
+        --tagging_scheme=IO \
         --viterbi=hard \
         --add_trained_span\
         --concat_types=None \
@@ -44,7 +44,7 @@ for seed in ${SEEDS[@]}; do
         --inner_steps=2 \
         --inner_size=16 \
         --max_ft_steps=3 \
-        --tagging_scheme=BIOES \
+        --tagging_scheme=IO \
         --concat_types=None \
         --lambda_max_loss=2.0
 
@@ -69,5 +69,5 @@ for seed in ${SEEDS[@]}; do
         --inner_lambda_max_loss=5.0 \
         --inner_similar_k=10 \
         --viterbi=hard \
-        --tagging_scheme=BIOES
+        --tagging_scheme=IO
 done
