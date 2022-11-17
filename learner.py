@@ -113,10 +113,10 @@ class Learner(nn.Module):
             "layer.{}.".format(i) for i in range(self.freeze_layer)
         ]
         logger.info("The frozen parameters are:")
-        for name, param in self.model.named_parameters():
-            if any(no_grad_pn in name for no_grad_pn in no_grad_param_names):
-                param.requires_grad = False
-                logger.info("  {}".format(name))
+        # for name, param in self.model.named_parameters():
+        #     if any(no_grad_pn in name for no_grad_pn in no_grad_param_names):
+        #         param.requires_grad = False
+        #         logger.info("  {}".format(name))
 
         self.opt = BertAdam(self.get_optimizer_grouped_parameters(), lr=self.lr_meta)
         self.scheduler = get_linear_schedule_with_warmup(
